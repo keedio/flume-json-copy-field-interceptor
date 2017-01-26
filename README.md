@@ -1,0 +1,1 @@
+# flume-json-copy-field-interceptor
