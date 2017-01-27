@@ -110,15 +110,15 @@ public class MessageJsonCopyFieldInterceptorTest extends EnrichmentInterceptorAb
     @Test
     public void testSingleJsonMessageInterception() {
         try {
-            Event event = createEvent("{\"extraData\":{},\"message\":\"{\\\"flow_id\\\":\\\"flow_id\\\"}\"}");
+            Event event = createEvent("{\"extraData\":{},\"message\":\"{\\\"flow_id\\\":\\\"something\\\"}\"}");
             EnrichmentInterceptor interceptor = createMessageInterceptor("enriched");
             Event intercepted = interceptor.intercept(event);
 
             EnrichedEventBody enrichedEventBody = EnrichedEventBody.createFromEventBody(intercepted.getBody(), true);
 
-            //assertTrue(enrichedEventBody.getMessage().equals("{\"some\": \"text\"}"));
+            assertTrue(enrichedEventBody.getMessage().equals("{\"flow_id\":\"something\"}"));
             assertTrue(enrichedEventBody.getExtraData().containsKey("flow_id"));
-            assertEquals(enrichedEventBody.getExtraData().get("flow_id"),"flow_id");
+            assertEquals(enrichedEventBody.getExtraData().get("flow_id"),"something");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,7 +135,7 @@ public class MessageJsonCopyFieldInterceptorTest extends EnrichmentInterceptorAb
 
             EnrichedEventBody enrichedEventBody = EnrichedEventBody.createFromEventBody(intercepted.getBody(), true);
 
-            //assertTrue(enrichedEventBody.getMessage().equals("{\"some\": \"text\", \"more\": \"fields\"}"));
+            assertTrue(enrichedEventBody.getMessage().equals("{\"some\": \"text\", \"more\": \"fields\"}"));
             assertTrue(enrichedEventBody.getExtraData().containsKey("some"));
             assertEquals(enrichedEventBody.getExtraData().get("some"),"text");
             assertTrue(enrichedEventBody.getExtraData().containsKey("more"));
@@ -181,7 +181,7 @@ public class MessageJsonCopyFieldInterceptorTest extends EnrichmentInterceptorAb
 
             EnrichedEventBody enrichedEventBody = EnrichedEventBody.createFromEventBody(intercepted.getBody(), true);
 
-            //assertTrue(enrichedEventBody.getMessage().equals("{\"string\": \"text\", \"nested\": {\"integer\": 123, \"float\": 123.45}}"));
+            assertTrue(enrichedEventBody.getMessage().equals("{\"string\": \"text\", \"nested\": {\"integer\": 123, \"float\": 123.45}}"));
             assertTrue(enrichedEventBody.getExtraData().containsKey("string"));
             assertEquals(enrichedEventBody.getExtraData().get("string"),"text");
             assertTrue(enrichedEventBody.getExtraData().containsKey("nested.integer"));
@@ -204,7 +204,7 @@ public class MessageJsonCopyFieldInterceptorTest extends EnrichmentInterceptorAb
 
             EnrichedEventBody enrichedEventBody = EnrichedEventBody.createFromEventBody(intercepted.getBody(), true);
 
-            //assertTrue(enrichedEventBody.getMessage().equals("{\"string\": \"text\", \"array\": [123, 123.45]}"));
+            assertTrue(enrichedEventBody.getMessage().equals("{\"string\": \"text\", \"array\": [123, 123.45]}"));
             assertTrue(enrichedEventBody.getExtraData().containsKey("string"));
             assertEquals(enrichedEventBody.getExtraData().get("string"),"text");
             assertTrue(enrichedEventBody.getExtraData().containsKey("array[0]"));
