@@ -6,7 +6,7 @@
 
   <groupId>org.keedio.flume.interceptor.enrichment</groupId>
   <artifactId>flume-json-copy-field-interceptor</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0</version>
 
   <name>flume-json-copy-field-interceptor</name>
   <description>Copies flume JSON type message to output to extraData fields.</description>
